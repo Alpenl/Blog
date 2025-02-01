@@ -11,11 +11,9 @@ isNoBackBtn: true
 
 网名*Alpen*，现居太原。
 
-坚持深耕技术领域的 T 型前端程序员，关注 AI 与独立开发，喜欢 java、Python，还会点 Vue.js、Web3；
+坚持深耕技术领域的 T 型后端程序员，关注 AI 与独立开发，喜欢 java、Python，还会点 Vue.js、Web3；
 
 虽是一名后端工程师，但更是一位计算机爱好者。平常会折腾一些效率工具，尝试各种工具软件和工具网站，喜欢开源、分享、探索、用代码创造价值。
-
-
 
 - 我也是一名摄影爱好者，目前使用 Sony A7M3，喜欢拍风光、生活以及扫街；
 - 还是一名数码产品爱好者，喜欢在闲鱼上淘一些小玩具。
@@ -24,7 +22,7 @@ isNoBackBtn: true
 
 - 2002，我出生了！
 - 2022 - 至今，就读于某双非一本，专业为软件工程；
-- 。。。。。。
+- .................
 - 2101，希望我还活着！
 - 3001，千年修为，我还在修炼！
 
@@ -39,12 +37,9 @@ isNoBackBtn: true
 
 > 备注来自博客网站以及表明来意，谢谢！
 
-- 邮箱：[3311432144@qq.com](mailto://3311432144@qq.com)
-- 微信：[Sonder](https://oss.justin3go.com/weixin.jpg)
-- 推特：[x.com/Justin1024go](https://x.com/Justin1024go)
+- 邮箱：[3311432144@qq.com](mailto:3311432144@qq.com)
+- 微信：[Sonder](https://20021217.xyz/Alpen.wx.jpg)
 - GitHub：[github.com/Alpenl](https://github.com/Alpenl)
-- 掘金：[juejin.cn](https://juejin.cn/user/220366354020749/posts)
-- 公众号：[Justin3go](https://oss.justin3go.com/qrcode.jpg)
 
 ## 说明
 
