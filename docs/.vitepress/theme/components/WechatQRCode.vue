@@ -90,8 +90,8 @@ onUnmounted(() => {
   content: '';
   position: absolute;
   top: -5px;
-  right: 140px;
-  transform: rotate(45deg);
+  left: 50%;
+  transform: translate(-50%, 0) rotate(45deg);
   width: 10px;
   height: 10px;
   background: var(--vp-c-bg);
