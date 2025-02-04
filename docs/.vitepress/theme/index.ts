@@ -8,6 +8,7 @@ import "./style.css";
 import Comment from "./components/Comment.vue";
 import ImageViewer from "./components/ImageViewer.vue"
 import GoBack from "./components/GoBack.vue";
+import WechatQRCode from "./components/WechatQRCode.vue";
 
 export default {
 	...Theme,
@@ -17,6 +18,7 @@ export default {
 			"doc-after": () => h(Comment),
 			"doc-bottom": () => h(ImageViewer),
 			"aside-top": () => h(GoBack),
+			"layout-top": () => h(WechatQRCode),
 		});
 	},
 
