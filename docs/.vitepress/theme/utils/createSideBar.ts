@@ -1,3 +1,5 @@
+// import { text } from "stream/consumers";
+
 export function createSideBarZH() {
   return {
     "/notes/": [
@@ -205,9 +207,13 @@ export function createSideBarZH() {
 				],
 			},
 			{
-				text: "AI相关[待更新]",
+				text: "AI相关",
 				collapsed: false,
-				items: [],
+				items: [
+					{text: "01Cursor中的java相关提示词", link: "/notes/AI相关/01Cursor中的java相关提示词"},
+					{text: "02Cursor中的uniapp相关提示词", link: "/notes/AI相关/02Cursor中的uniapp相关提示词"},
+					{text: "03Thinking-Claude", link: "/notes/AI相关/03Thinking-Claude"},
+				],
 			},
 		].map((item, i) => (!i ? item : { ...item, collapsed: true })),
   }
