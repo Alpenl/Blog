@@ -107,24 +107,6 @@ export function createSideBarZH() {
         ]
       },
       {
-        text: "threejs入门",
-        collapsed: false,
-        items: [
-          { text: "01起步", link: "/notes/threejs入门/01起步" },
-          { text: "02一个基本的threejs应用", link: "/notes/threejs入门/02一个基本的threejs应用" },
-          { text: "03基于物理的渲染和照明", link: "/notes/threejs入门/03基于物理的渲染和照明" },
-          { text: "04变换、坐标系和场景图", link: "/notes/threejs入门/04变换、坐标系和场景图" },
-          { text: "05动画循环", link: "/notes/threejs入门/05动画循环" },
-          { text: "06纹理映射", link: "/notes/threejs入门/06纹理映射" },
-          { text: "07插件", link: "/notes/threejs入门/07插件" },
-          { text: "08环境光", link: "/notes/threejs入门/08环境光" },
-          { text: "09组织你的场景", link: "/notes/threejs入门/09组织你的场景" },
-          { text: "10内置几何体", link: "/notes/threejs入门/10内置几何体" },
-          { text: "11以gLTF格式加载3D模型", link: "/notes/threejs入门/11以gLTF格式加载3D模型" },
-          { text: "12threejs动画系统", link: "/notes/threejs入门/12threejs动画系统" }
-        ]
-      },
-      {
         text: "Vue相关",
         collapsed: false,
         items: [
