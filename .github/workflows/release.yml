@@ -1,58 +1,79 @@
-name: Deploy VitePress site to Pages
+name: 自动部署VitePress站点到GitHub Pages
 
 on:
   push:
-    branches: [main]  # 设置要部署的分支
-  workflow_dispatch:
+    branches: [main]  # 触发部署的分支
+  workflow_dispatch:  # 允许手动触发工作流
 
 jobs:
   build-and-deploy:
+    name: 🚀 构建与部署
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      # --------------------------
+      # 代码检出与环境准备
+      # --------------------------
+      - name: 检出代码仓库 ✔️
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-      - name: Setup Node
+          fetch-depth: 0  # 获取完整提交历史
+
+      - name: 安装Node.js环境 ⚙️
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-      - name: Setup pnpm
+          node-version: 20  # 指定Node.js版本
+
+      - name: 配置pnpm包管理器 📦
         uses: pnpm/action-setup@v2
         with:
-          version: latest
-      - name: Get pnpm store directory
+          version: latest  # 使用最新版pnpm
+
+      # --------------------------
+      # 依赖缓存优化
+      # --------------------------
+      - name: 获取pnpm存储目录位置 🔍
         shell: bash
         run: |
+          # 获取pnpm store路径供后续缓存使用
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-      - name: Cache dependencies
+
+      - name: 缓存pnpm依赖目录 📦
         uses: actions/cache@v3
         with:
-          path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          path: ${{ env.STORE_PATH }}  # 缓存pnpm存储目录
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}  # 根据lock文件生成唯一key
           restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-      - name: Cache VitePress
+            ${{ runner.os }}-pnpm-store-  # 回退匹配策略
+
+      - name: 缓存VitePress构建缓存 📦
         uses: actions/cache@v3
         with:
           path: |
-            docs/.vitepress/.cache
-            docs/.vitepress/dist
-          key: ${{ runner.os }}-vitepress-${{ github.sha }}
+            docs/.vitepress/.cache  # VitePress缓存目录
+            docs/.vitepress/dist     # 构建输出目录
+          key: ${{ runner.os }}-vitepress-${{ github.sha }}  # 根据提交SHA生成key
           restore-keys: |
-            ${{ runner.os }}-vitepress-
-      - name: Install dependencies
-        run: pnpm install
-      - name: Build with VitePress
-        run: pnpm run docs:build
-      - name: Configure Git
+            ${{ runner.os }}-vitepress-  # 回退匹配策略
+
+      # --------------------------
+      # 构建与部署流程
+      # --------------------------
+      - name: 安装项目依赖 🔧
+        run: pnpm install  # 安装所有依赖项
+
+      - name: 构建VitePress项目 🛠️
+        run: pnpm run docs:build  # 执行构建命令
+
+      - name: 配置Git用户信息 ⚙️
         run: |
+          # 设置自动部署使用的Git用户信息
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-      - name: Deploy to GitHub Pages
+
+      - name: 部署到GitHub Pages 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          repository-name: Alpenl/Alpenl.github.io
-          branch: main  # 或者其他你想要部署的分支
-          folder: docs/.vitepress/dist
-          token: ${{ secrets.DEPLOY_TOKEN }}  # 需要配置这个 token
+          repository-name: Alpenl/Alpenl.github.io  # 目标仓库
+          branch: main          # 部署分支
+          folder: docs/.vitepress/dist  # 要部署的构建目录
+          token: ${{ secrets.DEPLOY_TOKEN }}  # 部署用访问令牌
