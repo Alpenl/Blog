@@ -1,6 +1,6 @@
 ---
 title: GitHub Actions 入门指南
-date: 2025-02-02
+date: 2025-02-15
 tags:
   - 教程
   - github
@@ -45,7 +45,6 @@ tags:
 └── src/              # 项目源代码
 ```
 
----
 
 ## 二、创建第一个工作流
 
@@ -86,7 +85,6 @@ jobs:
 3. 选择左侧的 "My First Workflow"
 4. 查看实时执行日志（点击具体运行记录）
 
----
 
 ## 三、常用触发机制
 
@@ -129,7 +127,6 @@ on:
         default: 'staging'
 ```
 
----
 
 ## 四、典型应用场景
 
@@ -138,31 +135,33 @@ on:
 ```yaml
 jobs:
   test:
+    name: 🧪 Node.js 测试套件
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       
       # 设置Node.js环境
-      - name: Setup Node.js
+      - name: 配置Node.js环境 ⚙️
         uses: actions/setup-node@v3
         with:
-          node-version: 18  # 指定Node版本
-          cache: 'npm'      # 启用依赖缓存
-      
+          node-version: 18  # 指定LTS版本
+          cache: 'npm'      # 启用npm缓存加速后续构建
+
       # 安装依赖
-      - name: Install dependencies
-        run: npm ci        # 使用clean install保证依赖一致性
+      - name: 安装项目依赖 📦
+        run: npm ci  # 使用clean install保证依赖一致性
       
       # 运行测试
-      - name: Run tests
+      - name: 执行单元测试 ✅
         run: npm test
       
       # 生成覆盖率报告
-      - name: Generate coverage
+      - name: 生成覆盖率报告 📊
         run: npm run coverage
       
       # 上传测试结果
-      - uses: actions/upload-artifact@v3
+      - name: 归档测试结果 📁
+        uses: actions/upload-artifact@v3
         with:
           name: test-results
           path: |
@@ -175,58 +174,58 @@ jobs:
 ```yaml
 jobs:
   build:
+    name: 🏗️ 构建项目
     runs-on: ubuntu-latest
     outputs:
       build-info: ${{ steps.meta.outputs.result }}
     steps:
       - uses: actions/checkout@v4
       
-      - name: Build project
+      - name: 编译生产版本 🔨
         run: |
           npm install
           npm run build
           
       # 生成构建元数据
-      - id: meta
+      - name: 生成构建信息 ℹ️
+        id: meta
         run: |
           echo "result=build-success-$(date +%s)" >> $GITHUB_OUTPUT
       
-      - uses: actions/upload-artifact@v3
+      - name: 上传构建产物 📤
+        uses: actions/upload-artifact@v3
         with:
           name: production-build
           path: dist/
 
   deploy:
-    needs: build  # 依赖build作业
+    name: 🚀 部署到生产环境
+    needs: build
     runs-on: ubuntu-latest
-    environment: production  # 使用环境保护
+    environment: production
     steps:
-      - name: Download artifact
+      - name: 下载构建产物 📥
         uses: actions/download-artifact@v3
         with:
           name: production-build
           
-      - name: Deploy to server
+      - name: SSH安全部署 🔒
         env:
-          SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}  # 从仓库机密读取SSH密钥
         run: |
           scp -i $SSH_KEY -r . user@server:/var/www
 ```
 
----
+
 
 ## 五、进阶配置技巧
 
 ### 5.1 密钥管理
 
-1. 进入仓库 Settings → Secrets and variables → Actions
-2. 点击 "New repository secret"
-3. 在workflow中调用：
-
 ```yaml
-- name: Deploy
+- name: 安全部署应用 🔐
   env:
-    API_TOKEN: ${{ secrets.API_KEY }}
+    API_TOKEN: ${{ secrets.API_KEY }}  # 使用仓库存储的机密凭证
   run: |
     curl -H "Authorization: Bearer $API_TOKEN" ...
 ```
@@ -236,32 +235,24 @@ jobs:
 ```yaml
 jobs:
   test:
+    name: 🔄 多版本兼容性测试
     strategy:
       matrix:
-        node-version: [14.x, 16.x, 18.x]
-        os: [ubuntu-latest, windows-latest]
+        node-version: [14.x, 16.x, 18.x]  # 测试主流Node版本
+        os: [ubuntu-latest, windows-latest]  # 跨平台验证
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
+      
+      - name: 配置Node环境 ⚙️
+        uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
-      - run: npm test
+          node-version: ${{ matrix.node-version }}  # 动态获取矩阵版本
+          
+      - name: 执行自动化测试 🧪
+        run: npm test
 ```
 
-### 5.3 工作流可视化
-
-```mermaid
-graph TD
-    A[代码推送] --> B{触发条件}
-    B -->|符合规则| C[执行构建]
-    C --> D[运行测试]
-    D --> E{测试通过?}
-    E -->|是| F[部署生产环境]
-    E -->|否| G[发送通知]
-```
-
----
 
 ## 六、学习资源推荐
 
@@ -278,4 +269,4 @@ graph TD
    [安全加固指南](https://securitylab.github.com/tools/actions) - 避免常见安全隐患
 
 5. **阮一峰的网络日志**   
-   [阮一峰的网络日志](https://www.ruanyifeng.com/blog/2019/09/getting-started-with-github-actions.html) - 阮一峰的网络日志
+   [GitHub Actions 入门教程](https://www.ruanyifeng.com/blog/2019/09/getting-started-with-github-actions.html) - 阮一峰的网络日志
