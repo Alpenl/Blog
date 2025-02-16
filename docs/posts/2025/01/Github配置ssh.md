@@ -140,22 +140,21 @@ cat ~/.ssh/id_rsa_personal.pub
 
 ### 4. 配置 SSH 客户端
 
-编辑 `~/.ssh/config` 文件，定义主机别名及对应密钥：
+编辑 `~/.ssh/config` 文件，定义主机别名及对应密钥：（有些网络不能使用22端口）
 
 ```bash
-# 工作账号配置
+# 个人账号
+Host github.com
+  HostName ssh.github.com
+  User git
+  Port 443
+  IdentityFile ~/.ssh/id_rsa_personal
+# 工作账号
 Host work.github.com
-    HostName github.com
-    User git
-    IdentityFile ~/.ssh/id_rsa_work
-    IdentitiesOnly yes
-
-# 个人账号配置
-Host personal.github.com
-    HostName github.com
-    User git
-    IdentityFile ~/.ssh/id_rsa_personal
-    IdentitiesOnly yes
+  HostName ssh.github.com
+  User git
+  Port 443
+  IdentityFile ~/.ssh/id_rsa_work
 ```
 
 ### 5. 测试 SSH 连接
