@@ -185,3 +185,46 @@ main > div > div > pre > code {
 	/* scrollbar-color: rgba(0, 0, 0, 0.12) transparent; */
 	scrollbar-width: thin;
 }
+
+/** 导航栏左移 - 最直接的方法 */
+/* 强制所有导航元素左对齐 */
+.VPNav {
+	--vp-nav-height-desktop: 64px;
+	--vp-nav-height-mobile: 56px;
+	width: 100%;
+	position: relative;
+}
+
+.VPNavBar {
+	position: relative;
+	border-bottom: 1px solid var(--vp-c-gutter);
+	height: var(--vp-nav-height-desktop);
+	padding: 0;
+	background-color: var(--vp-nav-bg-color);
+	transition: border-color 0.5s, background-color 0.5s;
+}
+
+.VPNavBar.fill {
+	border-bottom-color: transparent;
+	background-color: var(--vp-nav-bg-color);
+}
+
+.VPNavBar.has-sidebar .content {
+	padding: 0 !important;
+	margin: 0 !important;
+}
+
+.VPNavBar .container {
+	display: flex;
+	justify-content: flex-start !important;
+	margin: 0 !important;
+	padding: 0 32px !important;
+	max-width: 100% !important;
+}
+
+/* 确保移动设备上的样式 */
+@media (max-width: 768px) {
+	.VPNavBar .container {
+		padding: 0 16px !important;
+	}
+}
